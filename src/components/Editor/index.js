@@ -4,6 +4,7 @@ import 'quill/dist/quill.core.css';
 import 'quill/dist/quill.snow.css';
 import './index.css';
 import {Link} from "react-router-dom";
+import Content from "@/components/common/Content";
 
 const Editor = inject('quill', 'flowStore')(({ quill, flowStore}) => {
 

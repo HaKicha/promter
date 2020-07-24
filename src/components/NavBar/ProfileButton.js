@@ -1,11 +1,12 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import IconButton from "@material-ui/core/IconButton";
 import { AccountCircle } from "@material-ui/icons";
+import { auth } from 'firebase';
+import Button from "@material-ui/core/Button";
+import {makeStyles} from "@material-ui/core/styles";
 
-export default function ProfileButton() {
+export default function ProfileButton({user}) {
     const [anchorEl, setAnchorEl] = React.useState(null);
 
     const handleClick = (event) => {
@@ -16,17 +17,23 @@ export default function ProfileButton() {
         setAnchorEl(null);
     };
 
+    const logoutHandler = () => {
+        handleClose();
+        auth().signOut();
+    }
+
     return (
         <div>
-            <IconButton
+            <Button
                 aria-label="account of current user"
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
                 onClick={handleClick}
                 color="inherit"
+                startIcon={<AccountCircle />}
             >
-                <AccountCircle />
-            </IconButton>
+                <p>{user.displayName}</p>
+            </Button>
             <Menu
                 id="simple-menu"
                 anchorEl={anchorEl}
@@ -34,9 +41,9 @@ export default function ProfileButton() {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
             >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                <MenuItem onClick={handleClose}>{user.displayName}</MenuItem>
                 <MenuItem onClick={handleClose}>My account</MenuItem>
-                <MenuItem onClick={handleClose}>Logout</MenuItem>
+                <MenuItem onClick={logoutHandler}>Logout</MenuItem>
             </Menu>
         </div>
     )

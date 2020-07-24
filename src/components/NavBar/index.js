@@ -7,6 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ProfileButton from "./ProfileButton";
 import LoginButton from "./LoginButton";
+import {inject, observer} from "mobx-react";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -20,9 +21,8 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function NavBar() {
+const NavBar = inject('userStore')(observer(({userStore}) => {
     const classes = useStyles();
-
     return (
         <AppBar position="fixed">
             <Toolbar>
@@ -32,9 +32,11 @@ export default function NavBar() {
                 <Typography variant="h6" className={classes.title}>
                     News
                 </Typography>
-                {/*<ProfileButton />*/}
-                <LoginButton />
+                {userStore.user ? <ProfileButton user={userStore.user} /> : <LoginButton />}
+
             </Toolbar>
         </AppBar>
     )
-}
+}));
+
+export default NavBar;
