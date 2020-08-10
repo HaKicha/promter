@@ -5,6 +5,8 @@ import Editor from "../components/Editor";
 import PromterView from "../components/PromterView";
 import NavBar from "../components/NavBar";
 import Content from "@/components/common/Content";
+import {EDITOR, PROMTER} from "@/utils/routes";
+import NavPane from "@/components/NavPane";
 
 
 function App() {
@@ -12,10 +14,11 @@ function App() {
       <>
         <BrowserRouter>
           <NavBar />
+          <NavPane />
           <Content>
               <Switch>
-                  <Route component={PromterView} path={'/promter'} />
-                  <Route component={Editor} path={['/', '/editor']} />
+                  <Route component={PromterView} path={PROMTER} />
+                  <Route component={Editor} path={['/', EDITOR]} />
               </Switch>
           </Content>
         </BrowserRouter>

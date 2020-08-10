@@ -1,13 +1,22 @@
 import React from 'react';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import { AccountCircle } from "@material-ui/icons";
 import { auth } from 'firebase';
-import Button from "@material-ui/core/Button";
 import {makeStyles} from "@material-ui/core/styles";
+import Avatar from "@material-ui/core/Avatar";
+
+const useStyles = makeStyles(theme => ({
+    avatar: {
+        cursor: 'pointer',
+        '&:hover': {
+            boxShadow: '0 0 2px 2px rgba(50,50,50,.2)'
+        }
+    }
+}));
 
 export default function ProfileButton({user}) {
     const [anchorEl, setAnchorEl] = React.useState(null);
+    const classes = useStyles();
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -24,16 +33,15 @@ export default function ProfileButton({user}) {
 
     return (
         <div>
-            <Button
+            <Avatar
                 aria-label="account of current user"
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
                 onClick={handleClick}
-                color="inherit"
-                startIcon={<AccountCircle />}
-            >
-                <p>{user.displayName}</p>
-            </Button>
+                alt={user.displayName}
+                src={user.photoURL}
+                className={classes.avatar}
+            />
             <Menu
                 id="simple-menu"
                 anchorEl={anchorEl}

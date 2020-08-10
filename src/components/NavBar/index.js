@@ -21,13 +21,24 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const NavBar = inject('userStore')(observer(({userStore}) => {
+const NavBar = inject('userStore', 'uiStore')(observer(({userStore, uiStore}) => {
     const classes = useStyles();
+
+    function toggleDrawer() {
+        uiStore.isDrawerOpen ? uiStore.closeDrawer() : uiStore.openDrawer();
+    }
+
     return (
         <AppBar position="fixed">
             <Toolbar>
-                <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                    <MenuIcon />
+                <IconButton
+                    edge="start"
+                    className={classes.menuButton}
+                    color="inherit"
+                    aria-label="menu"
+                    onClick={toggleDrawer}
+                >
+                    <MenuIcon/>
                 </IconButton>
                 <Typography variant="h6" className={classes.title}>
                     News
